@@ -1,14 +1,14 @@
-//import * as THREE from "three";
-//import * as YUKA from "yuka";
+import * as THREE from "three";
+import * as YUKA from "yuka";
 
 //import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { MapControls } from "./three/examples/jsm/controls/MapControls.js";
-import { GLTFLoader } from "./three/examples/jsm/loaders/GLTFLoader.js";
+import { MapControls } from "../js/three/examples/jsm/controls/MapControls.js";
+import { GLTFLoader } from "../js/three/examples/jsm/loaders/GLTFLoader.js";
 //import { modelScale } from "three/tsl";
 import {
   CSS2DRenderer,
   CSS2DObject,
-} from "./three/examples/jsm/renderers/CSS2DRenderer.js";
+} from "/three/examples/jsm/renderers/CSS2DRenderer.js";
 //import { update } from "three/examples/jsm/libs/tween.module.js";
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
