@@ -1,20 +1,5 @@
 {
-  "name": "template",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "vite": "^6.2.1"
-  },
   "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "three": "^0.174.0",
-    "yuka": "^0.7.8"
+    "three": "^0.174.0"
   }
 }

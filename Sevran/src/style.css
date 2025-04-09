@@ -1,0 +1,36 @@
+body {
+  margin: 0;
+}
+
+.area {
+  background-color: black;
+  color: azure;
+  padding: 10px;
+  position: relative;
+  transform: translateX(-10px);
+  opacity: 0;
+  transition-duration: 0.2s;
+  transition-property: opacity, transform;
+}
+
+.area::after {
+  position: absolute;
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-color: black;
+  top: 90%;
+  left: 50%;
+  transform: rotateZ(45deg) translateX(-50%);
+  z-index: -1;
+}
+
+.hide {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0px);
+}
