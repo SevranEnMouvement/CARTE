@@ -1,15 +1,10 @@
-import * as THREE from "three";
-//import * as YUKA from "yuka";
-
-//import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { MapControls } from "https://cdn.jsdelivr.net/npm/three.map.control@1.6.0/index.min.js";
-import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js";
-//import { modelScale } from "three/tsl";
+import * as THREE from "https://unpkg.com/three@0.158.0/build/three.module.js";
+import { GLTFLoader } from "https://unpkg.com/three@0.158.0/examples/jsm/loaders/GLTFLoader.js";
+import { OrbitControls as MapControls } from "https://unpkg.com/three@0.158.0/examples/jsm/controls/OrbitControls.js";
 import {
   CSS2DRenderer,
   CSS2DObject,
-} from "https://cdn.jsdelivr.net/npm/three-css2drender-types@1.0.3/CSS2DRenderer.min.js";
-//import { update } from "three/examples/jsm/libs/tween.module.js";
+} from "https://unpkg.com/three@0.158.0/examples/jsm/renderers/CSS2DRenderer.js";
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -148,7 +143,7 @@ window.addEventListener("mousedown", function onDocumentMouseDown(event) {
 
 const loader = new GLTFLoader();
 
-loader.load("./sevran.gltf", function (glb) {
+loader.load("/sevran.gltf", function (glb) {
   const model = glb.scene;
   scene.add(model);
 });
