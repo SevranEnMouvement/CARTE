@@ -2,13 +2,13 @@ import * as THREE from "three";
 //import * as YUKA from "yuka";
 
 //import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { MapControls } from "./js/three/examples/jsm/controls/MapControls.js";
-import { GLTFLoader } from "./js/three/examples/jsm/loaders/GLTFLoader.js";
+import { MapControls } from "https://cdn.jsdelivr.net/npm/three.map.control@1.6.0/index.min.js";
+import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js";
 //import { modelScale } from "three/tsl";
 import {
   CSS2DRenderer,
   CSS2DObject,
-} from "./js/three/examples/jsm/renderers/CSS2DRenderer.js";
+} from "https://cdn.jsdelivr.net/npm/three-css2drender-types@1.0.3/CSS2DRenderer.min.js";
 //import { update } from "three/examples/jsm/libs/tween.module.js";
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
