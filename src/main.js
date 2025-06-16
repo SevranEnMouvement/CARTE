@@ -9,6 +9,7 @@ import {
   CSS2DRenderer,
   CSS2DObject,
 } from "./js/three/examples/jsm/renderers/CSS2DRenderer.js";
+import { triplanarTexture } from "three/tsl";
 //import { update } from "three/examples/jsm/libs/tween.module.js";
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -50,6 +51,80 @@ labelRenderer.domElement.style.position = "absolute";
 labelRenderer.domElement.style.top = "0px";
 labelRenderer.domElement.style.pointerEvents = "none";
 document.body.appendChild(labelRenderer.domElement);
+
+//train
+const vehicleGeometry = new THREE.ConeGeometry(51, 55, 58);
+vehicleGeometry.rotateX(Math.PI * 0.5);
+const vehicleMaterial = new THREE.MeshNormalMaterial();
+const vehicleMesh = new THREE.Mesh(vehicleGeometry, vehicleMaterial);
+vehicleMesh.matrixAutoUpdate = false;
+scene.add(vehicleMesh);
+
+const vehicle = new YUKA.Vehicle();
+
+vehicle.setRenderComponent(vehicleMesh, sync);
+
+function sync(entity, renderComponent) {
+  renderComponent.matrix.copy(entity.worldMatrix);
+}
+
+const path = new YUKA.Path();
+path.add(new YUKA.Vector3(10000, 0, -3450));
+path.add(new YUKA.Vector3(-500, 0, 620));
+path.add(new YUKA.Vector3(-700, 0, 800));
+path.add(new YUKA.Vector3(-800, 0, 10050));
+path.add(new YUKA.Vector3(-0, 0, 50));
+console.log(path.current());
+//path.add(new YUKA.Vector3(2000, 0, -400));
+//path.add(new YUKA.Vector3(500, 0, 0));
+//path.add(new YUKA.Vector3(0, 0, 1050));
+//path.add(new YUKA.Vector3(-500, 0, 550));
+//path.add(new YUKA.Vector3(-1500, 0, 1000));
+//path.add(new YUKA.Vector3(-3000, 0, 2050));
+
+path.loop = true;
+
+vehicle.position.copy(path.current());
+vehicle.updateOrientation = true;
+vehicle.rotationType = 1;
+
+vehicle.maxSpeed = 5500;
+
+const followPathBehavior = new YUKA.FollowPathBehavior(path, 0.5);
+vehicle.steering.add(followPathBehavior);
+
+const onPathBehavior = new YUKA.OnPathBehavior(path);
+onPathBehavior.radius = 2;
+vehicle.steering.add(onPathBehavior);
+
+const entityManager = new YUKA.EntityManager();
+entityManager.add(vehicle);
+vehicle.activateAutoUpdate();
+
+const position = [];
+for (let i = 0; i < path._waypoints.length; i++) {
+  const waypoint = path._waypoints[i];
+  position.push(waypoint.x, waypoint.y, waypoint.z);
+}
+
+const lineGeometry = new THREE.BufferGeometry();
+lineGeometry.setAttribute(
+  "position",
+  new THREE.Float32BufferAttribute(position, 3)
+);
+
+const lineMaterial = new THREE.LineBasicMaterial({ color: 0x0000000 });
+const lines = new THREE.LineLoop(lineGeometry, lineMaterial);
+scene.add(lines);
+
+const time = new YUKA.Time();
+
+const labelRendererTrain = new CSS2DRenderer();
+labelRendererTrain.setSize(window.innerWidth, window.innerHeight);
+labelRendererTrain.domElement.style.position = "absolute";
+labelRendererTrain.domElement.style.top = "0px";
+labelRendererTrain.domElement.style.pointerEvents = "none";
+document.body.appendChild(labelRendererTrain.domElement);
 
 //link
 var link = "http://google.com";
@@ -155,9 +230,9 @@ loader.load("./sevran.gltf", function (glb) {
 
 function animate() {
   controls.update();
-  labelRenderer.render(scene, camera);
-  //const delta = time.update().getDelta();
-  //entityManager.update(delta);
+  labelRendererTrain.render(scene, camera);
+  const delta = time.update().getDelta();
+  entityManager.update(delta);
   renderer.render(scene, camera);
 }
 
