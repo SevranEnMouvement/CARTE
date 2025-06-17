@@ -99,7 +99,7 @@ vehicle.steering.add(onPathBehavior);
 
 const entityManager = new YUKA.EntityManager();
 entityManager.add(vehicle);
-vehicle.activateAutoUpdate();
+//vehicle.activateAutoUpdate();
 
 const position = [];
 for (let i = 0; i < path._waypoints.length; i++) {
