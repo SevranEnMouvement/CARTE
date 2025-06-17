@@ -7,6 +7,6 @@ export default defineConfig({
   },
   server: {
     host: "0.0.0.0",
-    allowedHosts: ["https://sevran-3d.onrender.com/"],
+    allowedHosts: ["sevran-3d.onrender.com"],
   },
 });
