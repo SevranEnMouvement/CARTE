@@ -7,11 +7,6 @@ export default defineConfig({
   },
   server: {
     host: "0.0.0.0",
-  },
-  admin: {
-    vite: (config) => {
-      config.server.allowedHosts = ["https://sevran-3d.onrender.com/"];
-      return config;
-    },
+    allowedHosts: ["https://sevran-3d.onrender.com/"],
   },
 });
