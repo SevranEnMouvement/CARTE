@@ -39,11 +39,13 @@ controls.dampingFactor = 0.05;
 controls.enableDamping = true;
 controls.maxPolarAngle = Math.PI / 2;
 controls.maxDistance = 2500;
-controls.maxTargetRadius = 1200;
 
 //positionnement camera
-camera.position.set(0, 1500, 4000);
-camera.lookAt(0, 0, 0);
+camera.fov = 40;
+camera.far = 3000;
+camera.updateProjectionMatrix();
+camera.position.set(-35000, 8000, 35000);
+camera.lookAt(-35000, 0, 35000);
 
 const labelRenderer = new CSS2DRenderer();
 labelRenderer.setSize(window.innerWidth, window.innerHeight);
@@ -226,6 +228,21 @@ const loader = new GLTFLoader();
 loader.load("./sevran.gltf", function (glb) {
   const model = glb.scene;
   scene.add(model);
+});
+
+window.addEventListener("message", (event) => {
+  if (event.data.type === "zone-hover") {
+    const place = event.data.place;
+    const events = document.querySelectorAll(".timeline-event");
+
+    events.forEach((event) => {
+      const match = event.getAttribute("data-place") === place;
+      event.classList.toggle("highlight", match);
+      event.querySelector(".description").style.display = match
+        ? "block"
+        : "none";
+    });
+  }
 });
 
 function animate() {
