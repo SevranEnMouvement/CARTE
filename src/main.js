@@ -221,8 +221,7 @@ window.addEventListener("mousemove", function (e) {
       p.textContent = "Métro 16";
 
       window.parent.postMessage({ type: "zone-hover", place: "m16" }, "*");
-    }
-    if (intersects[0].object.name == "vEtudiante") {
+    } else if (intersects[0].object.name == "vEtudiante") {
       p.className = "area show";
       cPointLabel.position.set(-650, 160, 1300);
       p.textContent = "Ville étudiante";
@@ -234,6 +233,12 @@ window.addEventListener("mousemove", function (e) {
     }
   } else {
     p.className = "area hide";
+    // Réinitialise tous les éléments de la frise
+    const events = document.querySelectorAll(".timeline-event");
+    events.forEach((event) => {
+      event.classList.remove("highlight");
+      event.querySelector(".description").style.display = "none";
+    });
   }
 });
 
