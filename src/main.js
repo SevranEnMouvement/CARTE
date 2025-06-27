@@ -134,11 +134,41 @@ var element = document.createElement("a");
 element.setAttribute("href", link);
 element.innerHTML = "your text";
 
-function createPointMesh(name, x, y, z) {
+function createPointMeshF(name, x, y, z) {
   const geo = new THREE.SphereGeometry(50, 50, 50);
   const mat = new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    opacity: 0.5,
+    color: 0x168b5a,
+    opacity: 0.7,
+    transparent: true,
+    //fog: false,
+  });
+
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.position.set(x, y, z);
+  mesh.name = name;
+  return mesh;
+}
+
+function createPointMesh16(name, x, y, z) {
+  const geo = new THREE.SphereGeometry(50, 50, 50);
+  const mat = new THREE.MeshBasicMaterial({
+    color: 0xec709a,
+    opacity: 0.7,
+    transparent: true,
+    //fog: false,
+  });
+
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.position.set(x, y, z);
+  mesh.name = name;
+  return mesh;
+}
+
+function createPointMeshV(name, x, y, z) {
+  const geo = new THREE.SphereGeometry(50, 50, 50);
+  const mat = new THREE.MeshBasicMaterial({
+    color: 0x364968,
+    opacity: 0.7,
     transparent: true,
     //fog: false,
   });
@@ -151,12 +181,12 @@ function createPointMesh(name, x, y, z) {
 
 const group = new THREE.Group();
 
-const friche = createPointMesh("friche", -250, 100, 600);
+const friche = createPointMeshF("friche", -250, 100, 600);
 group.add(friche);
 //friche.userData = { URL: "http://stackoverflow.com" };
-const m16 = createPointMesh("m16", -1300, 100, 580);
+const m16 = createPointMesh16("m16", -1300, 100, 580);
 group.add(m16);
-const vEtudiante = createPointMesh("vEtudiante", -650, 100, 1300);
+const vEtudiante = createPointMeshV("vEtudiante", -650, 100, 1300);
 group.add(vEtudiante);
 scene.add(group);
 
@@ -183,16 +213,24 @@ window.addEventListener("mousemove", function (e) {
       p.className = "area show";
       cPointLabel.position.set(-250, 160, 600);
       p.textContent = "Friche";
-    }
-    if (intersects[0].object.name == "m16") {
+
+      window.parent.postMessage({ type: "zone-hover", place: "friche" }, "*");
+    } else if (intersects[0].object.name == "m16") {
       p.className = "area show";
       cPointLabel.position.set(-1300, 100, 580);
       p.textContent = "Métro 16";
+
+      window.parent.postMessage({ type: "zone-hover", place: "m16" }, "*");
     }
     if (intersects[0].object.name == "vEtudiante") {
       p.className = "area show";
       cPointLabel.position.set(-650, 160, 1300);
       p.textContent = "Ville étudiante";
+
+      window.parent.postMessage(
+        { type: "zone-hover", place: "vEtudiante" },
+        "*"
+      );
     }
   } else {
     p.className = "area hide";
