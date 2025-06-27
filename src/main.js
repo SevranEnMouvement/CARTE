@@ -238,6 +238,7 @@ window.addEventListener("mousemove", function (e) {
     events.forEach((event) => {
       event.classList.remove("highlight");
       event.querySelector(".description").style.display = "none";
+      window.parent.postMessage({ type: "zone-leave" }, "*");
     });
   }
 });
