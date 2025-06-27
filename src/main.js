@@ -232,14 +232,8 @@ window.addEventListener("mousemove", function (e) {
       );
     }
   } else {
-    p.className = "area hide";
-    // Réinitialise tous les éléments de la frise
-    const events = document.querySelectorAll(".timeline-event");
-    events.forEach((event) => {
-      event.classList.remove("highlight");
-      event.querySelector(".description").style.display = "none";
-      window.parent.postMessage({ type: "zone-leave" }, "*");
-    });
+    p.className = "area hide"; // cache le label
+    window.parent.postMessage({ type: "zone-leave" }, "*"); // message pour reset la frise
   }
 });
 
@@ -286,11 +280,18 @@ window.addEventListener("message", (event) => {
         ? "block"
         : "none";
     });
+  } else if (event.data.type === "zone-leave") {
+    const events = document.querySelectorAll(".timeline-event");
+    events.forEach((event) => {
+      event.classList.remove("highlight");
+      event.querySelector(".description").style.display = "none"; // masquage des descriptions
+    });
   }
 });
 
 function animate() {
   controls.update();
+  labelRenderer.render(scene, camera);
   labelRendererTrain.render(scene, camera);
   const delta = time.update().getDelta();
   entityManager.update(delta);
